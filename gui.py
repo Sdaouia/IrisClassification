@@ -26,8 +26,9 @@ root.title("❀ Iris Classification ❀")
 Frame=LabelFrame(root,text="",bg="MediumPurple",padx=5,pady=10)
 Frame.pack(padx=20,pady=20)
 
+#WINDOW 1
 
-
+#WINDOW 2
 #Labels
 sepal_length_label = Label(Frame, text="Sepal Length",width=20 , font=('Helvetica', 16),bg='MediumPurple')
 sepal_length_label = Label(Frame, text="Sepal Length",width=20 , font=('Helvetica', 16),bg='MediumPurple')
