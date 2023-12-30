@@ -1,5 +1,16 @@
 from tkinter import *
 
+def hide_elements():
+    # Hide labels, entries, and button
+    sepal_length_input.grid_forget()
+    sepal_length_label.grid_forget()
+    sepal_width_input.grid_forget()
+    sepal_width_label.grid_forget()
+    petal_length_input.grid_forget()
+    petal_length_label.grid_forget()
+    petal_width_input.grid_forget()
+    petal_width_label.grid_forget()
+    classity_button.grid_forget()
 
 root=Tk()
 root.geometry("600x300")
@@ -21,23 +32,23 @@ petal_length_input = Entry(root, width=20 , font=('Helvetica', 16))
 petal_width_input = Entry(root, width=20 , font=('Helvetica', 16))
 
 #Buttons
-classity_button = Button(root, text="Classify Now!",width=20 , font=('Helvetica', 12),bg='Purple', fg='white')
+classity_button = Button(root, text="Classify Now!",command=hide_elements,width=20 , font=('Helvetica', 16),bg='Purple', fg='white')
 
 
 # Grid Positioning
-sepal_length_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
-sepal_length_input.grid(row=1, column=0, padx=10, pady=10)
+sepal_length_label.grid(row=0, column=0, padx=10, pady=(10,7), sticky="e")
+sepal_length_input.grid(row=1, column=0, padx=10, pady=(10,7))
 
-sepal_width_label.grid(row=0, column=1, padx=10, pady=10, sticky="e")
-sepal_width_input.grid(row=1, column=1, padx=10, pady=10)
+sepal_width_label.grid(row=0, column=1, padx=10, pady=(10,7), sticky="e")
+sepal_width_input.grid(row=1, column=1, padx=10, pady=(10,7))
 
-petal_length_label.grid(row=2, column=0, padx=10, pady=10, sticky="e")
-petal_length_input.grid(row=3, column=0, padx=10, pady=10)
+petal_length_label.grid(row=2, column=0, padx=10, pady=(10,7), sticky="e")
+petal_length_input.grid(row=3, column=0, padx=10, pady=(10,7))
 
-petal_width_label.grid(row=2, column=1, padx=10, pady=10, sticky="e")
-petal_width_input.grid(row=3, column=1, padx=10, pady=10)
+petal_width_label.grid(row=2, column=1, padx=10, pady=(10,7), sticky="e")
+petal_width_input.grid(row=3, column=1, padx=10, pady=(10,7))
 
-classity_button.grid(row=4, column=0, padx=10, pady=10)
+classity_button.grid(row=4, column=0, padx=(10,10), pady=10)
 
 
 root.mainloop()
