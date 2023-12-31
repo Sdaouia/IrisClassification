@@ -14,3 +14,6 @@ y = iris_data['variety']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
 #train_test_split : shuffles the data before splitting, 
 #random_state parameter : ensures reproducibility in the shuffling process. 
+
+# Initialize Gaussian Naive Bayes model
+nb_model = GaussianNB()
