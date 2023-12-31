@@ -33,11 +33,10 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"The accuracy of the Naive Baye model is {accuracy:.2f}\nThis means that it can correctly predict the type of the Iris flower {round(accuracy * 100)}% of the time.\n")
 
 #calculate classification report
-print('Classification Report:')
-print(classification_report(y_test, y_pred))
+print('Classification Report:\n', classification_report(y_test, y_pred))
 
 
 # Calculate confusion matrix
 conf_matrix = confusion_matrix(y_test, y_pred)
 print("Confusion Matrix:")
-print(conf_matrix)
+print(pd.DataFrame(conf_matrix, columns=nb_model.classes_, index=nb_model.classes_))
