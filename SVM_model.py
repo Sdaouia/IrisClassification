@@ -27,9 +27,7 @@ def SVM(file):
     accuracy = accuracy_score(Y_test, y_pred)
     report = classification_report(Y_test, y_pred)
     conf_matrix = confusion_matrix(Y_test, y_pred)    
-    return accuracy, report, conf_matrix
-
-if __name__ =="__main__":
-    SVM(file)  
+    
+    return accuracy, report, conf_matrix 
     
     
