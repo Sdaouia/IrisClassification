@@ -93,11 +93,11 @@ def openIrisForme():
     next_button.grid_forget()
 
     #Labels
-    sepal_length_label = Label(root, text="Sepal Length",width=20 , font=('Helvetica', 16),bg='MediumPurple')
-    sepal_length_label = Label(root, text="Sepal Length",width=20 , font=('Helvetica', 16),bg='MediumPurple')
-    sepal_width_label = Label(root, text="Sepal Width",width=20 , font=('Helvetica', 16),bg='MediumPurple')
-    petal_length_label = Label(root, text="Petal Length",width=20 , font=('Helvetica', 16),bg='MediumPurple')
-    petal_width_label = Label(root, text="Petal Width",width=20 , font=('Helvetica', 16),bg='MediumPurple')
+    sepal_length_label = Label(root, text="Sepal Length",width=40 , font=('Helvetica', 16),bg='MediumPurple',anchor='w')
+    sepal_length_label = Label(root, text="Sepal Length",width=40 , font=('Helvetica', 16),bg='MediumPurple',anchor='w')
+    sepal_width_label = Label(root, text="Sepal Width",width=40 , font=('Helvetica', 16),bg='MediumPurple',anchor='w')
+    petal_length_label = Label(root, text="Petal Length",width=40 , font=('Helvetica', 16),bg='MediumPurple',anchor='w')
+    petal_width_label = Label(root, text="Petal Width",width=40 , font=('Helvetica', 16),bg='MediumPurple',anchor='w')
 
     #Inputs
     sepal_length_input = Entry(root, width=20 , font=('Helvetica', 16))
@@ -111,7 +111,8 @@ def openIrisForme():
     classity_button = Button(root, text="Classify Now!",width=20 , font=('Helvetica', 16),bg='#6A0DAD', fg='white',command=lambda:on_submit(sepal_length_input,sepal_length_label,sepal_width_label,sepal_width_input,petal_length_input,petal_length_label,petal_width_label,petal_width_input,classity_button))
     
 
-    # Grid Positioning
+  
+      # Grid Positioning
     sepal_length_label.grid(row=0, column=0, padx=10, pady=(10,7), sticky="e")
     sepal_length_input.grid(row=1, column=0, padx=10, pady=(10,7))
  
@@ -126,8 +127,6 @@ def openIrisForme():
 
     classity_button.grid(row=8, column=0, padx=(10,10), pady=10)
 
-    
-
 
 
 
@@ -138,13 +137,6 @@ root=Tk()
 root.geometry("600x600")
 root['background']='MediumPurple'
 root.title("❀ Iris Classification ❀")
-
-root_width = root.winfo_reqwidth()
-root_height = root.winfo_reqheight()
-
-
-root=Labelroot(root, width=root_width, height=root_height,text="",bg="MediumPurple")
-root.pack()
 
 
 # First Page 
