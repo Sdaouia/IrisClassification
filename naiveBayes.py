@@ -38,7 +38,7 @@ def nbModel(file_path):
     conf_matrix = confusion_matrix(y_test, y_pred)
 
     # Save the trained model to a file
-    joblib.dump(nb_model, 'naive_bayes_model.joblib')
+    joblib.dump(nb_model, 'trained_NB_model.joblib')
 
     # Return the results as a dictionary
     results = {
@@ -61,7 +61,7 @@ def nbModel(file_path):
 def nbIrisClassifier(sepal_length, sepal_width, petal_length, petal_width):
     try:
         # Load the trained Naive Bayes model
-        nb_model = joblib.load('naive_bayes_model.joblib')
+        nb_model = joblib.load('trained_NB_model.joblib')
     except FileNotFoundError:
         print("Model file not found. Make sure to train the model first.")
         return None
