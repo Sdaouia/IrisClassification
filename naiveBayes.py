@@ -59,13 +59,10 @@ def nbModel(file_path):
 #The "nbIrisClassifier" function uses the trained Gaussian Nb model to classify an instance of iris data entered by the user
 
 def nbIrisClassifier(sepal_length, sepal_width, petal_length, petal_width):
-    try:
-        # Load the trained Naive Bayes model
-        nb_model = joblib.load('trained_NB_model.joblib')
-    except FileNotFoundError:
-        print("Model file not found. Make sure to train the model first.")
-        return None
-
+    
+    # Load the trained Naive Bayes model
+    nb_model = joblib.load('trained_NB_model.joblib')
+    
 
     # Prepare the input data for prediction with feature names
     new_instance = pd.DataFrame({
