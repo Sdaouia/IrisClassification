@@ -14,41 +14,27 @@ def openFiles():
     global opened_file
     opened_file=root.filename
     if root.filename:
-        #print(root.filename)
         upload_button.config(text="Iris.csv",bg='#DCDCDC')
-        # Read the content of the CSV file
+        
         
 
 def training(model_value,opened_file):
 
-    print("Training with",model_value)
-
-    #with open(opened_file, 'r') as file:
-            #reader = csv.reader(file)
-            #for row in reader:
-                #print(row)
-    
     #call the model training
     if(model_value==2):
-        print("before calling nb_model")
-        print("path=",opened_file)
         result=nbModel(opened_file)
-        #print(result['accuracy'])  
-        #print(result['classification_report']) 
-        #print(result['confusion_matrix'])
+        move_to_second_page(result,model_value) 
 
     if(model_value==1):
-        print("before calling svm_model")
-        print("path=",opened_file)
         result=SVM(opened_file)    
-
-    #go to page 2
-    move_to_second_page(result,model_value)          
+        move_to_second_page(result,model_value) 
+    
+    if(model_value==3):
+        messagebox.showerror("Error", " << Decision Tree Model >> is not available ,Please Try with another model ! ")         
     
 
 def check_uploaded_file(model_value):
       if(opened_file is not None):
-                print("you entred your dataset successfully")
                 training(model_value,opened_file)
       else:
           messagebox.showerror("Error", "Please enter your data set ! ")
@@ -59,17 +45,14 @@ def on_submit(sepal_length_input,sepal_length_label,sepal_width_label,sepal_widt
         float_values = [float(value) for value in entry_values]
         print("Float values:", float_values,"with model",model_value)
         forgetForme(sepal_length_input,sepal_length_label,sepal_width_label,sepal_width_input,petal_length_input,petal_length_label,petal_width_label,petal_width_input,classity_button)
-        #call classification function(,,,,model_value) four value
+
+        #call classification function
         if(model_value==2):
-          print("before calling  nb classifier")
           variety=nbIrisClassifier(float(sepal_length_input.get()), float(sepal_width_input.get()), float(petal_length_input.get()), float(petal_width_input.get()))
-          print(variety)
           move_to_forth_page(model_value,variety)
 
         if(model_value==1):
-          print("before calling  svm classifier")
           variety=SVM_classification(float(sepal_length_input.get()), float(sepal_width_input.get()), float(petal_length_input.get()), float(petal_width_input.get()))
-          print(variety)
           move_to_forth_page(model_value,variety)
           
     except ValueError:
@@ -120,7 +103,7 @@ def move_to_third_page(accuracy,classification_report_label,classification_repor
 
     #Inputs
     sepal_length_input = Entry(root, width=20 , font=('Helve', 16))
-    #sepal_length_input.insert(0,"Entre sepal length :")
+    
 
     sepal_width_input = Entry(root, width=20 , font=('Helvetica', 16))
     petal_length_input = Entry(root, width=20 , font=('Helvetica', 16))
