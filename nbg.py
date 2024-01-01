@@ -3,9 +3,87 @@ from tkinter import filedialog
 import csv 
 from tkinter import messagebox
 from PIL import ImageTk,Image
-from naiveBayes import nbModel , nbIrisClassifier 
 
 
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import joblib
+
+### DONE WITH BAYES + GUI
+
+######################################################################  daouia 's functions
+def nbModel(file_path):
+    # Load the iris dataset from the provided file
+    iris_data = pd.read_csv(file_path) 
+
+    # Prepare the Data for training
+    X = iris_data[['sepal.length', 'sepal.width', 'petal.length', 'petal.width']]
+    y = iris_data['variety']
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
+
+    # Initialize Gaussian Naive Bayes model
+    nb_model = GaussianNB()
+
+    # Train the model
+    nb_model.fit(X_train, y_train)
+
+    # Make predictions
+    y_pred = nb_model.predict(X_test)
+
+    # Evaluate the performance of the model
+    # Calculate accuracy
+    accuracy = accuracy_score(y_test, y_pred)
+
+    # Calculate classification report
+    report = classification_report(y_test, y_pred)
+
+    # Calculate confusion matrix
+    conf_matrix = confusion_matrix(y_test, y_pred)
+
+    # Save the trained model to a file
+    joblib.dump(nb_model, 'trained_NB_model.joblib')
+
+    # Return the results as a dictionary
+    results = {
+        'accuracy': accuracy,
+        'classification_report': report,
+        'confusion_matrix': conf_matrix
+    }
+
+    return results
+
+
+def nbIrisClassifier(sepal_length, sepal_width, petal_length, petal_width):
+    
+    # Load the trained Naive Bayes model
+    nb_model = joblib.load('trained_NB_model.joblib')
+    
+
+    # Prepare the input data for prediction with feature names
+    new_instance = pd.DataFrame({
+        'sepal.length': [sepal_length],
+        'sepal.width': [sepal_width],
+        'petal.length': [petal_length],
+        'petal.width': [petal_width]
+    }, columns=['sepal.length', 'sepal.width', 'petal.length', 'petal.width'])
+
+
+    # Use the trained Naive Bayes model to make predictions
+    prediction = nb_model.predict(new_instance)
+
+    # Return the result of the classification
+    return prediction[0]
+
+
+
+
+
+###################################################################### KATIA 'S GUI
 global opened_file
 opened_file=None
 
