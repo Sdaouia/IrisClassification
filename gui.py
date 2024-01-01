@@ -35,7 +35,12 @@ def training(model_value,opened_file):
         result=nbModel(opened_file)
         #print(result['accuracy'])  
         #print(result['classification_report']) 
-        #print(result['confusion_matrix']) 
+        #print(result['confusion_matrix'])
+
+    if(model_value==1):
+        print("before calling svm_model")
+        print("path=",opened_file)
+        result=SVM(opened_file)    
 
     #go to page 2
     move_to_second_page(result,model_value)          
@@ -60,6 +65,12 @@ def on_submit(sepal_length_input,sepal_length_label,sepal_width_label,sepal_widt
           variety=nbIrisClassifier(float(sepal_length_input.get()), float(sepal_width_input.get()), float(petal_length_input.get()), float(petal_width_input.get()))
           print(variety)
           move_to_forth_page(model_value,variety)
+
+        if(model_value==1):
+          print("before calling  svm classifier")
+          variety=SVM_classification(float(sepal_length_input.get()), float(sepal_width_input.get()), float(petal_length_input.get()), float(petal_width_input.get()))
+          print(variety)
+          move_to_forth_page(model_value,variety)
           
     except ValueError:
         messagebox.showerror("Error", "Please enter valid float numbers.")
@@ -73,6 +84,8 @@ def move_to_second_page(result,model_value):
       bayes_option.grid_forget()
       decision_tree_option.grid_forget()
       train_button.grid_forget()
+      
+      #svm and naive bayes hard coded
 
       accuracy=Label(root, text=f"The accuracy of the Naive Bayes model is {result['accuracy']:.2f}\nThis means that it can correctly predict the type of the Iris flower {round(result['accuracy'] * 100)}% of the time.\n\n",width=0 , font=('Georgia', 16,'bold'),fg='white',bg='MediumPurple',anchor='w')
       classification_report_label=Label(root, text="Classification report :",width=40 , font=('Georgia', 16,'bold'),fg='white',bg='MediumPurple',anchor='w')
