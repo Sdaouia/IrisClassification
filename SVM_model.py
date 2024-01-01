@@ -3,8 +3,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 import pandas as pd
 
-def SVM(file):
-    df = pd.read_csv(file)
+def SVM(file_path):
+    df = pd.read_csv(file_path)
     
     X = df.iloc[:,:-1].values
     Y = df.iloc[:,-1].values
