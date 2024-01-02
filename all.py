@@ -171,60 +171,69 @@ def nbIrisClassifier(sepal_length, sepal_width, petal_length, petal_width):
 ######################################################################  GUI
 
 global opened_file
-opened_file=None
+opened_file=None   # before opening any file it' intialised with None
+
+
 
 def openFiles():
+    #open the file system and allow the user to select a csv file
     root.filename=filedialog.askopenfilename(initialdir="/",title="select file",filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")))
     global opened_file
     opened_file=root.filename
     if root.filename:
         name_file=os.path.basename(root.filename)
-        upload_button.config(text=name_file,bg='#DCDCDC')
+        upload_button.config(text=name_file,bg='#DCDCDC') # update the text of <upload button> to the opened file name
         
-        
+    
+
 
 def training(model_value,opened_file):
-
-    #call the model training
-    if(model_value==2):
-        result=nbModel(opened_file)
-        move_to_second_page(result,model_value) 
-
-    if(model_value==1):
+    #call the functions to train the model 
+    if(model_value==1):        #if model value = 1 it's an svm model
         result=SVM(opened_file)    
-        move_to_second_page(result,model_value) 
-    
-    if(model_value==3):
+        move_to_second_page(result,model_value) #we move to second page
+
+    if(model_value==2):        #if model value = 2 it's a naive bayes model
+        result=nbModel(opened_file)
+        move_to_second_page(result,model_value) #we move to second page
+
+    if(model_value==3):        #if model value = 3 its decision tree model
         messagebox.showerror("Error", " << Decision Tree Model >> is not available ,Please Try with another model ! ")         
     
 
+
 def check_uploaded_file(model_value):
+      #if the user select a file we train the data set else we show an error message
       if(opened_file is not None):
                 training(model_value,opened_file)
       else:
           messagebox.showerror("Error", "Please enter your data set ! ")
 
+
+
 def on_submit(forme_label,sepal_length_input,sepal_length_label,sepal_width_label,sepal_width_input,petal_length_input,petal_length_label,petal_width_label,petal_width_input,classity_button,model_value):
+    #before the classification of the instance we check if the user has entred valid float numbers
     entry_values = [entry.get() for entry in [sepal_length_input,sepal_width_input,petal_length_input,petal_width_input]]
     try:
         float_values = [float(value) for value in entry_values]
-        print("Float values:", float_values,"with model",model_value)
         forgetForme(forme_label,sepal_length_input,sepal_length_label,sepal_width_label,sepal_width_input,petal_length_input,petal_length_label,petal_width_label,petal_width_input,classity_button)
 
-        #call classification function
-        if(model_value==2):
-          variety=nbIrisClassifier(float(sepal_length_input.get()), float(sepal_width_input.get()), float(petal_length_input.get()), float(petal_width_input.get()))
-          move_to_forth_page(model_value,variety)
-
+        #call classification function using the trained model 
         if(model_value==1):
           variety=SVM_classification(float(sepal_length_input.get()), float(sepal_width_input.get()), float(petal_length_input.get()), float(petal_width_input.get()))
           move_to_forth_page(model_value,variety)
-          
+
+        if(model_value==2):
+          variety=nbIrisClassifier(float(sepal_length_input.get()), float(sepal_width_input.get()), float(petal_length_input.get()), float(petal_width_input.get()))
+          move_to_forth_page(model_value,variety)
+ 
     except ValueError:
         messagebox.showerror("Error", "Please enter valid float numbers.")
 
 
+
 def move_to_second_page(result,model_value):
+      #remove the previous page
       Welcome_label.grid_forget()
       upload_label.grid_forget()
       upload_button.grid_forget()
@@ -234,12 +243,16 @@ def move_to_second_page(result,model_value):
       decision_tree_option.grid_forget()
       train_button.grid_forget()
       
-      #svm and naive bayes hard coded
+      #svm and naive bayes model
       if(model_value==1):
           model="SVM"
       else:    
           model="Naive Bayes"
 
+
+      # create the second page
+      #this page show details about the trained model with iris data set such as accuracy and classification report
+      
       accuracy_label=Label(root, text="The accuracy :",width=40 , font=('Georgia', 16,'bold'),fg='white',bg='MediumPurple',anchor='w')
 
       accuracy=Label(root, text=f"The accuracy of the {model} model is {result['accuracy']:.2f} .",width=50 , font=('Georgia', 13),fg='black',bg='MediumPurple',anchor='w')
@@ -265,7 +278,10 @@ def move_to_second_page(result,model_value):
       instance_button.grid(row=7, column=0, padx=20, pady=10)
 
 
+
 def move_to_third_page(accuracy_label,accuracy,accuracy_definition,classification_report_label,classification_report,confusion_matrix_label,confusion_matrix,instance_button,model_value):
+
+    #remove the previous page 
     accuracy.grid_forget()
     accuracy_label.grid_forget()
     accuracy_definition.grid_forget()
@@ -274,10 +290,9 @@ def move_to_third_page(accuracy_label,accuracy,accuracy_definition,classificatio
     classification_report.grid_forget()
     confusion_matrix.grid_forget()
     instance_button.grid_forget()
-
+    
+    #create the third page 
     #Labels
-
-
     forme_label = Label(root, text="Entre the instance here !",width=50 , font=('Georgia', 16,'bold'),bg='MediumPurple',fg='white',anchor='w')
     sepal_length_label = Label(root, text="Sepal Length",width=50 , font=('Georgia', 16,'bold'),bg='MediumPurple',fg='white',anchor='w')
     sepal_width_label = Label(root, text="Sepal Width",width=50 , font=('Georgia', 16,'bold'),bg='MediumPurple',fg='white',anchor='w')
@@ -313,8 +328,11 @@ def move_to_third_page(accuracy_label,accuracy,accuracy_definition,classificatio
 
     classity_button.grid(row=5, column=0, padx=(10,10), pady=50)
 
-def forgetForme(forme_label,sepal_length_input,sepal_length_label,sepal_width_label,sepal_width_input,petal_length_input,petal_length_label,petal_width_label,petal_width_input,classity_button):
 
+
+
+def forgetForme(forme_label,sepal_length_input,sepal_length_label,sepal_width_label,sepal_width_input,petal_length_input,petal_length_label,petal_width_label,petal_width_input,classity_button):
+    #remove the third page (the forme)
     forme_label.grid_forget()
     sepal_length_input.grid_forget()
     sepal_length_label.grid_forget()
@@ -326,25 +344,47 @@ def forgetForme(forme_label,sepal_length_input,sepal_length_label,sepal_width_la
     petal_width_input.grid_forget()
     classity_button.grid_forget()
 
+
+
 def move_to_forth_page(model_value,variety):
+     
+     #create the forth page 
+
      variety_label = Label(root, text=f"The instance is {variety}",width=40 , font=('Georgia', 16,'bold'),bg='MediumPurple',fg='white',anchor='w')
      image_label =Label(root)
      try_again_button=Button(root, text="Try a new instance",width=20 , font=('Georgia', 16),bg='#6A0DAD', fg='white',command=lambda:come_back_to_third(variety_label,image_label,try_again_button,model_value))
      
-     
-     img = Image.open("setosa.jpg")
-     resized_img = img.resize((400, 400))
-     photo = ImageTk.PhotoImage(resized_img)
-     image_label.config(image=photo)
-     image_label.image = photo 
+
+     if(variety=="Setosa"):
+       img = Image.open("setosa.jpg")
+       resized_img = img.resize((400, 400))
+       photo = ImageTk.PhotoImage(resized_img)
+       image_label.config(image=photo)
+       image_label.image = photo 
     
+     if(variety=="Virginica"):
+        img = Image.open("virginica.jpg")
+        resized_img = img.resize((400, 400))
+        photo = ImageTk.PhotoImage(resized_img)
+        image_label.config(image=photo)
+        image_label.image = photo 
+
+     if(variety=="Versicolor"):
+        img = Image.open("versicolore.jpg")
+        resized_img = img.resize((400, 400))
+        photo = ImageTk.PhotoImage(resized_img)
+        image_label.config(image=photo)
+        image_label.image = photo
     
      variety_label.grid(row=0, column=0, padx=20, pady=10)
      image_label.grid(row=1, column=0, padx=20, pady=10,sticky="e")
      try_again_button.grid(row=2, column=0, padx=10, pady=10)
      
+
+
 def come_back_to_third(variety_label,image_label,try_again_button,model_value):
     
+    #if the user want to try another instance we back to the forme
     variety_label.grid_forget()
     image_label.grid_forget()
     try_again_button.grid_forget()
@@ -388,7 +428,7 @@ def come_back_to_third(variety_label,image_label,try_again_button,model_value):
     classity_button.grid(row=5, column=0, padx=(10,10), pady=50)
     
 
-# Main Window + root
+# Main Window 
 root=Tk()
 root.geometry("750x570")
 root['background']='MediumPurple'
@@ -400,15 +440,12 @@ root.title("❀ Iris Classification ❀")
 # First Page 
 
 # WELCOME
-
 Welcome_label = Label(root, text="Welcom To Iris Classification",width=40 , font=('Georgia', 20,'bold'),fg='#6A0DAD',bg='MediumPurple')
 
 
 
 # QUESTION 1
 upload_label = Label(root, text="Please upload the data set :",width=40 , font=('Georgia', 16,'bold'),fg='white',bg='MediumPurple',anchor='w')
-
-
 upload_button =Button(root,text="Upload here",width=20 , font=('Georgia', 16),bg='#E6E6FA',fg='#111111',command=openFiles) 
 
 Welcome_label.grid(row=0, column=0, padx=10, pady=20)
@@ -422,8 +459,8 @@ choose_model =Label(root, text="Please choose the model :",width=40 , font=('Geo
 r=IntVar()
 r.set("1")
 
-svm_option=Radiobutton(root,          text="Support Vector Machine ",variable=r,value=1,width=30 , font=('Times New Roman', 16),bg='MediumPurple' )
-bayes_option=Radiobutton(root,        text="Naive Bayes            ",variable=r         ,value=2, width=30 , font=('Times New Roman', 16),bg='MediumPurple')
+svm_option=Radiobutton(root,text="Support Vector Machine ",variable=r,value=1,width=30 , font=('Times New Roman', 16),bg='MediumPurple' )
+bayes_option=Radiobutton(root,text="Naive Bayes            ",variable=r,value=2, width=30 , font=('Times New Roman', 16),bg='MediumPurple')
 decision_tree_option=Radiobutton(root,text="Decision Tree          ",variable=r,value=3,width=30 , font=('Times New Roman', 16),bg='MediumPurple')
    
 
