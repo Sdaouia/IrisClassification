@@ -3,6 +3,7 @@ from tkinter import filedialog
 import csv 
 from tkinter import messagebox
 from PIL import ImageTk,Image
+import pandas as pd
 from naiveBayes import nbModel , nbIrisClassifier 
 from SVM_model import SVM ,SVM_classification
 import os
