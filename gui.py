@@ -4,7 +4,8 @@ import csv
 from tkinter import messagebox
 from PIL import ImageTk,Image
 from naiveBayes import nbModel , nbIrisClassifier 
-
+from SVM_model import SVM ,SVM_classification
+import os
 
 
 global opened_file
@@ -34,18 +35,18 @@ def training(model_value,opened_file):
         result=nbModel(opened_file)
         move_to_second_page(result,model_value) #we move to second page
 
-    if(model_value==3):        #if model value = 3 its decision tree model
-        messagebox.showerror("Error", " << Decision Tree Model >> is not available ,Please Try with another model ! ")         
-    
+
 
 
 def check_uploaded_file(model_value):
       #if the user select a file we train the data set else we show an error message
-      if(opened_file is not None):
+      if(opened_file is not None and model_value!=3):
                 training(model_value,opened_file)
-      else:
-          messagebox.showerror("Error", "Please enter your data set ! ")
-
+      if(opened_file==None):
+          messagebox.showerror("Error", "Please upload iris data set ! ")
+      if(opened_file and model_value==3): #if the user select decision tree model we show error message
+          messagebox.showerror("Error", " << Decision Tree Model >> is not available ,Please Try with another model ! ")         
+    
 
 
 def on_submit(forme_label,sepal_length_input,sepal_length_label,sepal_width_label,sepal_width_input,petal_length_input,petal_length_label,petal_width_label,petal_width_input,classity_button,model_value):
@@ -93,7 +94,7 @@ def move_to_second_page(result,model_value):
       accuracy_label=Label(root, text="The accuracy :",width=40 , font=('Georgia', 16,'bold'),fg='white',bg='MediumPurple',anchor='w')
 
       accuracy=Label(root, text=f"The accuracy of the {model} model is {result['accuracy']:.2f} .",width=50 , font=('Georgia', 13),fg='black',bg='MediumPurple',anchor='w')
-      accuracy_definition=Label(root, text=f"This means that it can correctly predict the type of the Iris flower {round(result['accuracy'] * 100)}% of the time.)",width=50 , font=('Georgia', 13),fg='black',bg='MediumPurple',anchor='w')
+      accuracy_definition=Label(root, text=f"This means that it can correctly predict the type of the Iris flower {round(result['accuracy'] * 100)} % of the time.",width=65 , font=('Georgia', 13),fg='black',bg='MediumPurple',anchor='w')
 
       classification_report_label=Label(root, text="Classification report :",width=40 , font=('Georgia', 16,'bold'),fg='white',bg='MediumPurple',anchor='w')
 
@@ -105,7 +106,7 @@ def move_to_second_page(result,model_value):
 
       instance_button=Button(root, text="Enter an instance",width=30 , font=('Georgia', 16),bg='#6A0DAD', fg='white',command=lambda:move_to_third_page(accuracy_label,accuracy,accuracy_definition,classification_report_label,classification_report,confusion_matrix_label,confusion_matrix,instance_button,model_value))
 
-      accuracy_label.grid(row=0, column=0, padx=20, pady=5)
+      accuracy_label.grid(row=0, column=0, padx=20, pady=5, sticky="e")
       accuracy.grid(row=1, column=0, padx=20, pady=5, sticky="e")
       accuracy_definition.grid(row=2, column=0, padx=20, pady=5, sticky="e")
       classification_report_label.grid(row=3, column=0, padx=20, pady=5, sticky="e")
@@ -218,7 +219,7 @@ def move_to_forth_page(model_value,variety):
      try_again_button.grid(row=2, column=0, padx=10, pady=10)
      
 
-     
+
 def come_back_to_third(variety_label,image_label,try_again_button,model_value):
     
     #if the user want to try another instance we back to the forme
@@ -282,7 +283,7 @@ Welcome_label = Label(root, text="Welcom To Iris Classification",width=40 , font
 
 
 # QUESTION 1
-upload_label = Label(root, text="Please upload the data set :",width=40 , font=('Georgia', 16,'bold'),fg='white',bg='MediumPurple',anchor='w')
+upload_label = Label(root, text="Please upload the Iris data set :",width=40 , font=('Georgia', 16,'bold'),fg='white',bg='MediumPurple',anchor='w')
 upload_button =Button(root,text="Upload here",width=20 , font=('Georgia', 16),bg='#E6E6FA',fg='#111111',command=openFiles) 
 
 Welcome_label.grid(row=0, column=0, padx=10, pady=20)
@@ -296,9 +297,9 @@ choose_model =Label(root, text="Please choose the model :",width=40 , font=('Geo
 r=IntVar()
 r.set("1")
 
-svm_option=Radiobutton(root,text="Support Vector Machine ",variable=r,value=1,width=30 , font=('Times New Roman', 16),bg='MediumPurple' )
-bayes_option=Radiobutton(root,text="Naive Bayes            ",variable=r,value=2, width=30 , font=('Times New Roman', 16),bg='MediumPurple')
-decision_tree_option=Radiobutton(root,text="Decision Tree          ",variable=r,value=3,width=30 , font=('Times New Roman', 16),bg='MediumPurple')
+svm_option=Radiobutton(root          ,text="Support Vector Machine        ",variable=r,value=1,width=30 , font=('Times New Roman', 16),bg='MediumPurple' )
+bayes_option=Radiobutton(root        ,text="Naive Bayes                   ",variable=r,value=2, width=30 , font=('Times New Roman', 16),bg='MediumPurple')
+decision_tree_option=Radiobutton(root,text="Decision Tree (Available Soon)",variable=r,value=3,width=30 , font=('Times New Roman', 16),bg='MediumPurple')
    
 
 
