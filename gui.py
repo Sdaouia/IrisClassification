@@ -213,6 +213,10 @@ root.title("❀ Iris Classification ❀")
 
 # First Page 
 
+# WELCOME
+
+Welcome_label = Label(root, text="Welcom To Iris Classification",width=40 , font=('Georgia', 18,'bold'),fg='#6A0DAD',bg='MediumPurple')
+
 
 
 # QUESTION 1
@@ -221,8 +225,9 @@ upload_label = Label(root, text="Please upload the data set :",width=40 , font=(
 
 upload_button =Button(root,text="Upload here",width=20 , font=('Georgia', 16),bg='#E6E6FA',fg='#111111',command=openFiles) 
 
-upload_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
-upload_button.grid(row=1, column=0, padx=10, pady=10)
+Welcome_label.grid(row=0, column=0, padx=10, pady=10)
+upload_label.grid(row=1, column=0, padx=10, pady=10, sticky="e")
+upload_button.grid(row=2, column=0, padx=10, pady=10)
 
 
 # QUESTION 2
@@ -240,11 +245,11 @@ decision_tree_option=Radiobutton(root,text="Decision Tree          ",variable=r,
 # Training
 train_button = Button(root, text="Train the model",width=30 , font=('Georgia', 16),bg='#6A0DAD', fg='white',command=lambda:check_uploaded_file(r.get()))
 
-choose_model.grid(row=2, column=0, padx=10, pady=10, sticky="e")
-svm_option.grid(row=3, column=0, padx=10, pady=10)
-bayes_option.grid(row=4, column=0, padx=10, pady=10)
-decision_tree_option.grid(row=5, column=0, padx=10, pady=10)
-train_button.grid(row=6, column=0, padx=10, pady=10)
+choose_model.grid(row=3, column=0, padx=10, pady=10, sticky="e")
+svm_option.grid(row=4, column=0, padx=10, pady=10)
+bayes_option.grid(row=5, column=0, padx=10, pady=10)
+decision_tree_option.grid(row=6, column=0, padx=10, pady=10)
+train_button.grid(row=7, column=0, padx=10, pady=10)
 
     
 
