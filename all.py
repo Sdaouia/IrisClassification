@@ -440,7 +440,7 @@ root.title("❀ Iris Classification ❀")
 # First Page 
 
 # WELCOME
-Welcome_label = Label(root, text="Welcom To Iris Classification",width=40 , font=('Georgia', 20,'bold'),fg='#6A0DAD',bg='MediumPurple')
+Welcome_label = Label(root, text="Welcome To Iris Classification",width=40 , font=('Georgia', 20,'bold'),fg='#6A0DAD',bg='MediumPurple')
 
 
 
